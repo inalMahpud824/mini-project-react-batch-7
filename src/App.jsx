@@ -1,13 +1,14 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { LandingPage } from './pages/LandingPage';
 
 function App() {
-
-  return (
-    <>
-      <button className="btn btn-primary">test button</button>
-    </>
-  );
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
+]);
+  return <RouterProvider router={router} />;
 }
 
 export default App
