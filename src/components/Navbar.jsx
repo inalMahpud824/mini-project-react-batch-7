@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Navbar = () => {
   return (
     <>
@@ -31,13 +33,13 @@ export const Navbar = () => {
               GREEN<span className="text-neutral">INSIGHT</span>
             </div>
             <div className="hidden flex-none lg:block">
-              <ul className="menu menu-horizontal">
+              <ul className="menu menu-horizontal text-primary font-semibold">
                 {/* Navbar menu content here */}
-                <li>
-                  <a>Navbar Item 1</a>
+                <li className="hover:text-neutral">
+                  <Link to={"/artickel"}>List Artickel</Link>
                 </li>
-                <li>
-                  <a>Navbar Item 2</a>
+                <li className="hover:text-neutral">
+                  <Link to={"/login"}>Login</Link>
                 </li>
               </ul>
             </div>
@@ -49,13 +51,13 @@ export const Navbar = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu bg-base-200 min-h-full w-80 p-4">
+          <ul className="menu bg-secondary min-h-full w-80 p-4 font-bold text-lg text-primary">
             {/* Sidebar content here */}
-            <li>
-              <a>Sidebar Item 1</a>
+            <li className="hover:text-neutral">
+              <Link to={"/artickel"}>List Artickel</Link>
             </li>
-            <li>
-              <a>Sidebar Item 2</a>
+            <li className="hover:text-neutral">
+              <Link to={"/login"}>Login</Link>
             </li>
           </ul>
         </div>

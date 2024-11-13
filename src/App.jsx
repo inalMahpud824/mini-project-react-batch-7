@@ -7,6 +7,14 @@ const router = createBrowserRouter([
     path: "/",
     element: <LandingPage />,
   },
+  {
+    path: "/artickel",
+    element: <LandingPage />,
+  },
+  {
+    path: "/login",
+    element: <LandingPage />,
+  },
 ]);
   return <RouterProvider router={router} />;
 }
