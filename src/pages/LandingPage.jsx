@@ -8,7 +8,7 @@ export const LandingPage = () => {
       <Navbar />
       <div className="w-full min-h-screen bg-secondary px-7">
         {/* Hero Section start */}
-        <div className="w-full pt-7 flex md:flex-row flex-col-reverse gap-4 justify-between items-center mb-7">
+        <div className="w-full pt-7 flex md:flex-row flex-col-reverse gap-4 justify-between items-center ">
           <div className="md:w-[45%]">
             <h1 className="text-primary lg:text-6xl md:text-4xl text-2xl font-bold heading-font">
               Empowering sustainability through innovation
@@ -54,7 +54,7 @@ export const LandingPage = () => {
             dignissimos reiciendis ducimus.igendi, earum deserunt.
           </p>
           <div className="w-full pt-7 ">
-            <div className="flex md:flex-row flex-col-reverse gap-4 justify-between items-center mb-7">
+            <div className="flex md:flex-row flex-col-reverse gap-4 justify-between items-center">
               <div className="md:w-1/2 w-full">
                 <img
                   src="./images/green-1.webp"
