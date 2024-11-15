@@ -38,7 +38,7 @@ export const Navbar = () => {
               <ul className="menu menu-horizontal text-primary font-semibold">
                 {/* Navbar menu content here */}
                 <li className="hover:text-neutral">
-                  <Link to={"/artickel"}>List Artickel</Link>
+                  <Link to={"/artickel"}>List Article</Link>
                 </li>
                 <li className="hover:text-neutral">
                   <Link to={"/login"}>Login</Link>
@@ -56,7 +56,7 @@ export const Navbar = () => {
           <ul className="menu bg-secondary min-h-full w-80 p-4 font-bold text-lg text-primary">
             {/* Sidebar content here */}
             <li className="hover:text-neutral">
-              <Link to={"/artickel"}>List Artickel</Link>
+              <Link to={"/artickel"}>List Article</Link>
             </li>
             <li className="hover:text-neutral">
               <Link to={"/login"}>Login</Link>
