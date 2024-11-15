@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Navbar } from "../components/Navbar";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Footer } from "../components/Footer";
+import { Link } from "react-router-dom";
 
 export const ListArticle = () => {
   return (
@@ -38,11 +39,12 @@ const ItemArtickel = () => {
           harum nesciunt totam obcaecati unde eveniet natus, quos esse, vitae
           cumque. Quo commodi, velit ratione sit officiis repellat eius nihil.
         </p>
-
-        <button className="flex items-center gap-2 text-neutral my-4 hover:text-primary">
-          <p>See Detail</p>
-          <FontAwesomeIcon icon={faArrowRight} />
-        </button>
+        <Link to={`/article/1`}>
+          <button className="flex items-center gap-2 text-neutral my-4 hover:text-primary">
+            <p>See Detail</p>
+            <FontAwesomeIcon icon={faArrowRight} />
+          </button>
+        </Link>
       </div>
       <div className="">
         <img
