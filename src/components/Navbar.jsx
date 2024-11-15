@@ -30,7 +30,7 @@ export const Navbar = () => {
               </label>
             </div>
             <div className="mx-2 flex-1 px-2 text-primary text-xl font-bold heading-font">
-              <Link to={'/'}>
+              <Link to={"/"}>
                 GREEN<span className="text-neutral">INSIGHT</span>
               </Link>
             </div>
@@ -38,7 +38,7 @@ export const Navbar = () => {
               <ul className="menu menu-horizontal text-primary font-semibold">
                 {/* Navbar menu content here */}
                 <li className="hover:text-neutral">
-                  <Link to={"/artickel"}>List Article</Link>
+                  <Link to={"/article"}>List Article</Link>
                 </li>
                 <li className="hover:text-neutral">
                   <Link to={"/login"}>Login</Link>
@@ -56,7 +56,7 @@ export const Navbar = () => {
           <ul className="menu bg-secondary min-h-full w-80 p-4 font-bold text-lg text-primary">
             {/* Sidebar content here */}
             <li className="hover:text-neutral">
-              <Link to={"/artickel"}>List Article</Link>
+              <Link to={"/article"}>List Article</Link>
             </li>
             <li className="hover:text-neutral">
               <Link to={"/login"}>Login</Link>

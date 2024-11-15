@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { LandingPage } from './pages/LandingPage';
 import { Login } from './pages/Login';
-import { ListArtickel } from './pages/ListArtickel';
+import { ListArticle } from './pages/ListArticle';
 
 function App() {
 const router = createBrowserRouter([
@@ -10,8 +10,8 @@ const router = createBrowserRouter([
     element: <LandingPage />,
   },
   {
-    path: "/artickel",
-    element: <ListArtickel />,
+    path: "/article",
+    element: <ListArticle />,
   },
   {
     path: "/login",

@@ -3,7 +3,7 @@ import { Navbar } from "../components/Navbar";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Footer } from "../components/Footer";
 
-export const ListArtickel = () => {
+export const ListArticle = () => {
   return (
     <>
       <Navbar />
