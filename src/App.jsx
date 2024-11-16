@@ -4,6 +4,7 @@ import { Login } from './pages/Login';
 import { ListArticle } from './pages/ListArticle';
 import { DetailArticle } from './pages/DetailAricle';
 import { Dashboard } from './pages/dashboard/Dashboard';
+import { DashboardArticle } from './pages/dashboard/DashboardArticle';
 
 function App() {
 const router = createBrowserRouter([
@@ -20,8 +21,12 @@ const router = createBrowserRouter([
     element: <DetailArticle />,
   },
   {
-    path:"/dashboard",
+    path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/dashboard/content/article",
+    element: <DashboardArticle />,
   },
   {
     path: "/login",
