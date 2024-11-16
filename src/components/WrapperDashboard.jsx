@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Loading } from "./Loading";
-import logo from '../assets/images/logo.png'
+import logo from "../assets/images/logo.png";
 export const WrapperDashboard = ({
   children,
   tabActive,
@@ -60,7 +60,7 @@ export const WrapperDashboard = ({
                 >
                   <ItemListMenu
                     text={"Article"}
-                    href={"/dashboard/konten/article"}
+                    href={"/dashboard/content/article"}
                     active={
                       tabActive == "konten" && itemTabActive == "article"
                         ? true
@@ -68,12 +68,12 @@ export const WrapperDashboard = ({
                     }
                   />
                 </ListMenuDropdown>
-                <div
-                  onClick={handleLogout}
-                  className={`flex items-center justify-start py-4 pl-3 hover:bg-[#E9EFF6] cursor-pointer hover:text-blue-800 `}
-                >
-                  <FontAwesomeIcon icon={faPowerOff} />
-                  <p className="pl-3">Logout</p>
+                <div className="" onClick={handleLogout}>
+                  <ListMenuDashboard
+                    href={""}
+                    icon={faPowerOff}
+                    text={"Logout"}
+                  />
                 </div>
               </>
             </div>
@@ -92,7 +92,7 @@ export const WrapperDashboard = ({
                   </div>
                 </div>
 
-                {/* Burger button untuk tampilan mobile */}
+                {/* icon Burger button untuk tampilan mobile */}
                 <div className="navbar-end flex-1 md:hidden">
                   <label
                     htmlFor="my-drawer-3"
@@ -116,12 +116,11 @@ export const WrapperDashboard = ({
                 </div>
               </div>
 
-              <div className="bg-white max-h-screen overflow-y-scroll">
-                {children}
-              </div>
+              <div className="max-h-screen overflow-y-auto">{children}</div>
               {/* Page content here */}
             </div>
 
+            {/* Sidebar in Mobile device */}
             <div className="drawer-side">
               <label
                 htmlFor="my-drawer-3"
@@ -159,12 +158,12 @@ export const WrapperDashboard = ({
                         }
                       />
                     </ListMenuDropdown>
-                    <div
-                      onClick={handleLogout}
-                      className={`flex items-center justify-start py-4 pl-3 hover:bg-[#E9EFF6] cursor-pointer hover:text-blue-800 `}
-                    >
-                      <FontAwesomeIcon icon={faPowerOff} />
-                      <p className="pl-3">Logout</p>
+                    <div className="" onClick={handleLogout}>
+                      <ListMenuDashboard
+                        href={""}
+                        icon={faPowerOff}
+                        text={"Logout"}
+                      />
                     </div>
                   </>
                 </div>
