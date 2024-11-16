@@ -4,7 +4,7 @@ import { Login } from './pages/Login';
 import { ListArticle } from './pages/ListArticle';
 import { DetailArticle } from './pages/DetailAricle';
 import { Dashboard } from './pages/dashboard/Dashboard';
-import { DashboardArticle } from './pages/dashboard/DashboardArticle';
+import { DashboardArticle } from './pages/dashboard/article/DashboardArticle';
 
 function App() {
 const router = createBrowserRouter([
