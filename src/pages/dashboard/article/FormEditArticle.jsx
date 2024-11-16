@@ -2,13 +2,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { Editor } from "@tinymce/tinymce-react";
 import { apiKeyTinyMce, filePickerCallBack } from "../../../config/config";
-export const FormAddArticle = ({setAddArticle}) => {
+export const FormEditArticle = ({ setEditArticle, id }) => {
+  console.log(id)
   return (
     <>
       <div className="min-h-screen bg-white p-7">
         <button
           className="text-xl font-bold mb-4"
-          onClick={() => setAddArticle(false)}
+          onClick={() => setEditArticle(false)}
         >
           <FontAwesomeIcon icon={faAngleLeft} className="pr-4" />
           Kembali
@@ -77,7 +78,7 @@ export const FormAddArticle = ({setAddArticle}) => {
                 "removeformat | help | image",
               content_style:
                 "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-              file_picker_callback: filePickerCallBack,
+              file_picker_callback: filePickerCallBack
             }}
           />
           <button className="btn btn-neutral hover:btn-primary text-white mt-4 w-full">

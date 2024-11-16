@@ -1,28 +1,36 @@
 import { useState } from "react";
 import { WrapperDashboard } from "../../../components/WrapperDashboard";
 import { FormAddArticle } from "./FormAddArticle";
+import { FormEditArticle } from "./FormEditArticle";
 
 export const DashboardArticle = () => {
   const [addArticle, setAddArticle] = useState(false);
+  const [editArticle, setEditArticle] = useState(false);
+  const [idEdit, setIdEdit] = useState(null);
   return (
     <>
       <WrapperDashboard itemTabActive="article" tabActive={"konten"}>
         {addArticle ? (
           <FormAddArticle setAddArticle={setAddArticle} />
+        ) : editArticle ? (
+          <FormEditArticle setEditArticle={setEditArticle} id={idEdit} />
         ) : (
-          <DataTable setAddArticle={setAddArticle} />
+          <DataTable setAddArticle={setAddArticle} setEditArticle={setEditArticle} setIdEdit={setIdEdit} />
         )}
       </WrapperDashboard>
     </>
   );
 }
 
-const DataTable = ({ setAddArticle }) => {
+const DataTable = ({ setAddArticle, setEditArticle, setIdEdit }) => {
   return (
     <>
       <div className="px-7 py-4 bg-white min-h-screen">
         <h1 className="text-2xl font-bold py-7">List Article</h1>
-        <button className="btn btn-sm btn-neutral my-2 text-white" onClick={() => setAddArticle(true)}>
+        <button
+          className="btn btn-sm btn-neutral my-2 text-white"
+          onClick={() => setAddArticle(true)}
+        >
           Add Article
         </button>
         <div className="overflow-x-auto">
@@ -48,7 +56,10 @@ const DataTable = ({ setAddArticle }) => {
                 <td>13</td>
                 <td>
                   <div className="flex gap-2">
-                    <button className="btn btn-sm bg-blue-600 text-white border-none">
+                    <button className="btn btn-sm bg-blue-600 text-white border-none" onClick={() => {
+                      setIdEdit(1);
+                      setEditArticle(true);
+                    }}>
                       Edit
                     </button>
                     <button className="btn btn-sm bg-red-600 text-white border-none">
