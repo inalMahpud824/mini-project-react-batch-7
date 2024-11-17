@@ -1,3 +1,5 @@
+import { createClient } from "@supabase/supabase-js";
+
 export const apiKeyTinyMce = import.meta.env.VITE_API_KEY_TINYMCE;
 
 export const filePickerCallBack = (cb, value, meta) => {
@@ -29,3 +31,8 @@ export const filePickerCallBack = (cb, value, meta) => {
 
   input.click();
 };
+
+export const supabase = createClient(
+   import.meta.env.VITE_SUPABASE_URL,
+   import.meta.env.VITE_SUPABASE_KEY
+ );
