@@ -2,9 +2,45 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { Editor } from "@tinymce/tinymce-react";
 import { apiKeyTinyMce, filePickerCallBack } from "../../../config/config";
-export const FormAddArticle = ({setAddArticle}) => {
+import { useRef, useState } from "react";
+import { addArticle } from "../../../services/addArticle";
+import { uploadImage } from "../../../services/uploadImage";
+import { Loading } from "../../../components/Loading";
+export const FormAddArticle = ({ setAddArticle }) => {
+  const [inputArticle, setInputArticle] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const contentRef = useRef(null);
+  const imageRef = useRef(null);
+  const handleChange = (e) => {
+    setInputArticle({
+      ...inputArticle,
+      [e.target.id]: e.target.value,
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const file = imageRef.current.files[0];
+    const randomName = crypto.randomUUID();
+    try {
+      await uploadImage(file, randomName);
+      await addArticle({
+        title: inputArticle.title,
+        description: inputArticle.description,
+        content: contentRef.current.getContent(),
+        image: randomName,
+      });
+      setIsLoading(false);
+      setAddArticle(false);
+    } catch (e) {
+      console.error(e);
+      setIsLoading(false);
+    }
+    return;
+  };
   return (
     <>
+      {isLoading && <Loading />}
       <div className="min-h-screen bg-white p-7">
         <button
           className="text-xl font-bold mb-4"
@@ -13,13 +49,14 @@ export const FormAddArticle = ({setAddArticle}) => {
           <FontAwesomeIcon icon={faAngleLeft} className="pr-4" />
           Kembali
         </button>
-        <form action="">
+        <form action="" onSubmit={handleSubmit}>
           <label htmlFor="title" className="label">
             Title Article
           </label>
           <input
             type="text"
             id="title"
+            onChange={handleChange}
             className="input input-bordered w-full"
           />
           <label htmlFor="description" className="label">
@@ -28,6 +65,7 @@ export const FormAddArticle = ({setAddArticle}) => {
           <input
             type="text"
             id="description"
+            onChange={handleChange}
             className="input input-bordered w-full"
           />
           <label htmlFor="image" className="label">
@@ -36,6 +74,7 @@ export const FormAddArticle = ({setAddArticle}) => {
           <input
             type="file"
             id="image"
+            ref={imageRef}
             className="file-input w-full file-input-primary"
           />
           <label htmlFor="content" className="label">
@@ -43,10 +82,10 @@ export const FormAddArticle = ({setAddArticle}) => {
           </label>
           <Editor
             apiKey={apiKeyTinyMce}
-            // onInit={(_evt, editor) => (editorRef.current = editor)}
+            onInit={(_evt, editor) => (contentRef.current = editor)}
             // initialValue="<p>This is the initial content of the editor.</p>"
             init={{
-              height: 200,
+              height: 500,
               images_file_types: "jpeg,jpg,jpe,png,gif,webp",
               menubar: false,
               plugins: [
@@ -80,7 +119,10 @@ export const FormAddArticle = ({setAddArticle}) => {
               file_picker_callback: filePickerCallBack,
             }}
           />
-          <button className="btn btn-neutral hover:btn-primary text-white mt-4 w-full">
+          <button
+            className="btn btn-neutral hover:btn-primary text-white mt-4 w-full"
+            type="submit"
+          >
             Submit
           </button>
         </form>
