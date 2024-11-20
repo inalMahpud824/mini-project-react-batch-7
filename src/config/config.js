@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
-
+import OpenAI from "openai";
+// import { GoogleGenerativeAI } from "@google/generative-ai";
 export const apiKeyTinyMce = import.meta.env.VITE_API_KEY_TINYMCE;
 
 export const filePickerCallBack = (cb, value, meta) => {
@@ -33,6 +34,12 @@ export const filePickerCallBack = (cb, value, meta) => {
 };
 
 export const supabase = createClient(
-   import.meta.env.VITE_SUPABASE_URL,
-   import.meta.env.VITE_SUPABASE_KEY
- );
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_KEY
+);
+
+export const openai = new OpenAI({
+  baseURL: "https://openrouter.ai/api/v1",
+  apiKey: import.meta.env.VITE_AI_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
