@@ -5,9 +5,7 @@ import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { getArticleById } from "../services/getArticleById";
 // import { model } from "../config/config";
-import OpenAI from "openai";
-import { openai } from "../config/config";
-import { getSummaryWithAi } from "../utils/getSummary";
+import { getSummaryWithAi } from "../services/getSummary";
 
 export const DetailArticle = () => {
   const [article, setArticle] = useState({});
