@@ -1,26 +1,45 @@
 import { Navbar } from "../components/Navbar";
-import gambar from "../assets/images/green-1.webp";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { getArticleById } from "../services/getArticleById";
+// import { model } from "../config/config";
+import OpenAI from "openai";
+import { openai } from "../config/config";
+import { getSummaryWithAi } from "../utils/getSummary";
+
 export const DetailArticle = () => {
   const [article, setArticle] = useState({});
   const [error, setError] = useState(null);
-  const {id} = useParams()
+  const { id } = useParams();
+  const [summary, setSummary] = useState(null);
+  const [loadingSummary, setLoadingSummary] = useState(false);
   useEffect(() => {
     const fetch = async () => {
-      try{
+      try {
         const response = await getArticleById(id);
         setArticle(response[0]);
-      }catch(error){
-        setError(error)
-        console.error(error)
+      } catch (error) {
+        setError(error);
+        console.error(error);
       }
+    };
+    fetch();
+  }, [id]);
+
+  const handleSummary = async () => {
+    setLoadingSummary(true)
+    try {
+      const response = await getSummaryWithAi(article.content);
+      setSummary(response);
+      setLoadingSummary(false)
+    } catch (e) {
+      console.error(e);
+      setLoadingSummary(false)
     }
-    fetch()
-  }, [id])
+  };
+
   return (
     <>
       <Navbar />
@@ -53,19 +72,26 @@ export const DetailArticle = () => {
                 </Link>
               </div>
               <div className="flex justify-center items-center py-7 flex-col">
-                <button className="btn btn-neutral my-4">
+                <button
+                  onClick={() => handleSummary()}
+                  className="btn btn-neutral my-4"
+                >
                   Genereta Summary with AI
                 </button>
-                <div className="p-7 border-dashed border-2 rounded-2xl">
-                  <h3 className="text-lg font-bold">Summary with AI</h3>
-                  <p>
+                {loadingSummary && <p>Loading...</p>}
+                {summary && (
+                  <div className="p-7 border-dashed border-2 rounded-2xl">
+                    <h3 className="text-lg font-bold">Summary with AI</h3>
+                    <p>{summary}</p>
+                  </div>
+                )}
+                {/* <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Dignissimos velit fuga officia enim repellendus facere
                     neque, ratione consequuntur impedit odit in sapiente, sit
                     molestias similique, laboriosam voluptas aspernatur
                     temporibus vel!
-                  </p>
-                </div>
+                  </p> */}
               </div>
             </div>
           </>
