@@ -3,10 +3,10 @@ import { WrapperDashboard } from "../../../components/WrapperDashboard";
 import { FormAddArticle } from "./FormAddArticle";
 import { FormEditArticle } from "./FormEditArticle";
 import { getDataArticles } from "../../../services/getAllArticle";
-import { convertTimestampToDate } from "../../../utils/convertTimeStamp";
 import { Loading } from "../../../components/Loading";
 import { deleteArticleById } from "../../../services/deleteArticle";
 import { Link } from "react-router-dom";
+import { convertTimestampToDate } from "../../../utils/convertTime";
 
 export const DashboardArticle = () => {
   const [addArticle, setAddArticle] = useState(false);
