@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WrapperDashboard } from "../../../components/WrapperDashboard";
 import { FormAddArticle } from "./FormAddArticle";
 import { FormEditArticle } from "./FormEditArticle";
+import { getDataArticles } from "../../../services/getAllArticle";
+import { convertTimestampToDate } from "../../../utils/convertTimeStamp";
+import { Loading } from "../../../components/Loading";
+import { deleteArticleById } from "../../../services/deleteArticle";
+import { Link } from "react-router-dom";
 
 export const DashboardArticle = () => {
   const [addArticle, setAddArticle] = useState(false);
@@ -15,23 +20,57 @@ export const DashboardArticle = () => {
         ) : editArticle ? (
           <FormEditArticle setEditArticle={setEditArticle} id={idEdit} />
         ) : (
-          <DataTable setAddArticle={setAddArticle} setEditArticle={setEditArticle} setIdEdit={setIdEdit} />
+          <DataTable
+            setAddArticle={setAddArticle}
+            setEditArticle={setEditArticle}
+            setIdEdit={setIdEdit}
+          />
         )}
       </WrapperDashboard>
     </>
   );
-}
+};
 
 const DataTable = ({ setAddArticle, setEditArticle, setIdEdit }) => {
+  const [dataArticle, setDataArticle] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    setIsLoading(true)
+    const fetchAll = async () => {
+      const response = await getDataArticles();
+      if (response.error === true) {
+        alert(response.message);
+        setIsLoading(false)
+        return;
+      }
+      setDataArticle(response);
+      setIsLoading(false)
+    };
+    fetchAll();
+    setIsLoading(false)
+  }, []);
+
+  const handleDelete = async (id) => {
+    const confirm = window.confirm(`Apakah Kamu yakin delete artilikel dengan id ${id} ini ?`);
+    if(!confirm) return
+    try{
+     await deleteArticleById(id);
+      confirm("Delete Success");
+      window.location.reload();
+    }catch(e){
+      console.error(e)
+    }
+  }
   return (
     <>
+      {isLoading && <Loading />}
       <div className="px-7 py-4 bg-white min-h-screen">
         <h1 className="text-2xl font-bold py-7">List Article</h1>
         <button
           className="btn btn-sm btn-neutral my-2 text-white"
           onClick={() => setAddArticle(true)}
         >
-          Add Article
+          Tambah
         </button>
         <div className="overflow-x-auto">
           <table className="table">
@@ -40,49 +79,55 @@ const DataTable = ({ setAddArticle, setEditArticle, setIdEdit }) => {
               <tr>
                 <th></th>
                 <th>Title</th>
-                <th>Description</th>
-                <th>Create At</th>
-                <th>Update at</th>
-                <th className="rounded-tr-lg">Action</th>
+                <th>Deskripsi</th>
+                <th>Tanggal dibuat</th>
+                <th>Tanggal dirubah</th>
+                <th className="rounded-tr-lg">Aksi</th>
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr>
-                <th>1</th>
-                <td>Cy Ganderton</td>
-                <td>Quality Control Specialist</td>
-                <td>12</td>
-                <td>13</td>
-                <td>
-                  <div className="flex gap-2">
-                    <button className="btn btn-sm bg-blue-600 text-white border-none" onClick={() => {
-                      setIdEdit(1);
-                      setEditArticle(true);
-                    }}>
-                      Edit
-                    </button>
-                    <button className="btn btn-sm bg-red-600 text-white border-none">
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              {/* row 2 */}
-              <tr>
-                <th>2</th>
-                <td>Hart Hagerty</td>
-                <td>Desktop Support Technician</td>
-                <td>Purple</td>
-                <td>Purple</td>
-              </tr>
-              {/* row 3 */}
-              <tr>
-                <th>3</th>
-                <td>Brice Swyre</td>
-                <td>Tax Accountant</td>
-                <td>Red</td>
-              </tr>
+              {dataArticle &&
+                dataArticle.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td>
+                      <p className="max-h-[4rem] w-full overflow-y-auto underline ">
+                        <Link
+                          to={`/article/${item.id}`}
+                          className="hover:text-primary"
+                        >
+                          {item.title}
+                        </Link>
+                      </p>
+                    </td>
+                    <td>
+                      <p className="max-h-[4rem] overflow-y-auto">
+                        {item.description}
+                      </p>
+                    </td>
+                    <td>{convertTimestampToDate(item.created_at)}</td>
+                    <td>{convertTimestampToDate(item.update_at)}</td>
+                    <td>
+                      <div className="flex gap-2">
+                        <button
+                          className="btn btn-sm bg-blue-600 text-white border-none"
+                          onClick={() => {
+                            setIdEdit(item.id);
+                            setEditArticle(true);
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-sm bg-red-600 text-white border-none"
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
