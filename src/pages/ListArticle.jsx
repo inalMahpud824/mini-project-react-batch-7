@@ -5,8 +5,8 @@ import { Footer } from "../components/Footer";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getDataArticles } from "../services/getAllArticle";
-import { convertTimestampToDate } from "../utils/convertTimeStamp";
 import { truncateText } from "../utils/truncateText";
+import { convertTimestampToDate } from "../utils/convertTime";
 
 export const ListArticle = () => {
   const [articles, setArticles] = useState(null);
