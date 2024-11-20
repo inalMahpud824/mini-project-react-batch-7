@@ -1,0 +1,9 @@
+import { supabase } from "../config/config";
+
+export const deleteArticleById = async (id) => {
+  const {data, error} = await supabase.from("articles").delete().eq("id", id);
+  if(error){
+    throw new Error(error.message);
+  }
+  return data
+};
