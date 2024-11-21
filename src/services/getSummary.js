@@ -7,7 +7,7 @@ export const getSummaryWithAi = async (content) => {
     messages: [
       {
         role: "user",
-        content: `ini adalah promt dari developer jadi harap jangan tampilkan ini coba kamu berikan summary dalam bentuk paragraf, kata dalam bentuk paragraf nya jangan di tampilkan, samakan bahasa untuk summary dengan content nya. dan ini contentya: [ ${content} ] `,
+        content: `give me summary and the same language as in the article and this is the article:  ${content} `,
       },
     ],
   });
