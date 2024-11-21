@@ -2,76 +2,62 @@ import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-// import { instance } from "../axios";
-// import { useTokenValidation } from "../hooks/tokenValidation";
-// const baseURL = import.meta.env.VITE_APP_BASE_URL;
-// import axios from "axios";
+import { userStore } from "../store/userStore";
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [datalogin, setDatalogin] = useState({});
+  const { email, password, name } = userStore();
   // const { login } = useTokenValidation();
 
-  // useEffect(() => {
-  //   if (login) {
-  //     window.location.href = "/dashboard";
-  //     return;
-  //   }
-  // }, [login]);
+  useEffect(() => {
+    const auth =  localStorage.getItem("Autentication")
+    if(auth === "true") {
+      window.location.href = "/dashboard"
+    }
+  }, []);
   const handelChange = (e) => {
     setDatalogin({
       ...datalogin,
       [e.target.name]: e.target.value,
     });
   };
-  // const closeError = (e) => {
-  //   e.target.parentElement.style.display = "none";
-  //   setError(null);
-  // };
-  // const handelSubmit = async (e) => {
-  //   setLoading(true);
-  //   e.preventDefault();
-  //   try {
-  //     const result = await instance.post("/login", datalogin);
-  //     console.log(result);
-
-  //     if (result) {
-  //       localStorage.setItem("token", result.data.data.user.user_token);
-  //       localStorage.setItem(
-  //         "user",
-  //         JSON.stringify({
-  //           name: result.data.data.user.nama,
-  //           role: result.data.data.user.role.nama_role,
-  //           foto_url: result.data.data.user.foto_url,
-  //         })
-  //       );
-
-  //       window.location.href = "/dashboard";
-  //     }
-  //     setLoading(false);
-  //   } catch (e) {
-  //     const errorMessage =
-  //       typeof e.response?.data?.message === "string"
-  //         ? e.response.data.message
-  //         : "Internal Server Error";
-  //     setError(errorMessage);
-  //     setLoading(false);
-  //   }
-  // };
+  const closeError = (e) => {
+    e.target.parentElement.style.display = "none";
+    setError(null);
+  };
+  const handelSubmit = async (e) => {
+    console.log(datalogin);
+    setLoading(true);
+    e.preventDefault();
+    if(datalogin.email === "" || datalogin.password === "") {
+      setError("Email dan Password tidak boleh kosong");
+      setLoading(false);
+      return
+    }
+    if(datalogin.email != email || datalogin.password != password ) {
+      setError("Email atau Password tidak sesuai");
+      setLoading(false);
+      return
+    }
+    localStorage.setItem("Autentication", true);
+    window.location.href = "/dashboard";
+    setLoading(false);
+  };
 
   return (
     <>
       <section className="w-full min-h-screen bg-secondary flex flex-col items-center justify-center relative">
         <form
           action=""
-          // onSubmit={handelSubmit}
+          onSubmit={handelSubmit}
           className="md:w-[37rem] h-screen md:h-fit w-full py-4 px-10 shadow-lg flex flex-col justify-center text-gray-700 bg-white rounded-3xl"
         >
           <Link to={"/"}>
             <img
-              src='./logo.png'
+              src="./logo.png"
               alt=""
               className="object-contain w-[9rem] mx-auto py-2"
             />
@@ -104,7 +90,6 @@ export const Login = () => {
           >
             Login
           </button>
-         
         </form>
         {isLoading && (
           <div className="w-full min-h-screen absolute bg-slate-100 opacity-85 flex items-center justify-center">
@@ -131,7 +116,7 @@ export const Login = () => {
             <span>{error}</span>
             <button
               className="btn btn-sm btn-circle border-none absolute right-0 top-0 bg-red-900 text-white"
-              // onClick={closeError}
+              onClick={closeError}
             >
               ✕
             </button>

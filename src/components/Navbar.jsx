@@ -1,6 +1,19 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export const Navbar = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(
+    () => {
+      const token = localStorage.getItem("Autentication");
+      if (token) {
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
+    },
+    [isLogin]
+  )
   return (
     <>
       <div className="drawer sticky top-0 z-[1000]">
@@ -41,7 +54,11 @@ export const Navbar = () => {
                   <Link to={"/article"}>List Article</Link>
                 </li>
                 <li className="hover:text-neutral">
-                  <Link to={"/login"}>Login</Link>
+                  {isLogin ? (
+                    <Link to={"/dashboard"}>Dashboard</Link>
+                  ) : (
+                    <Link to={"/login"}>Login</Link>
+                  )}
                 </li>
               </ul>
             </div>
@@ -59,7 +76,11 @@ export const Navbar = () => {
               <Link to={"/article"}>List Article</Link>
             </li>
             <li className="hover:text-neutral">
-              <Link to={"/login"}>Login</Link>
+              {isLogin ? (
+                <Link to={"/dashboard"}>Dashboard</Link>
+              ) : (
+                <Link to={"/login"}>Login</Link>
+              )}
             </li>
           </ul>
         </div>

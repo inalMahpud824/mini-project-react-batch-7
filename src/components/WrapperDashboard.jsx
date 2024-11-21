@@ -9,22 +9,20 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Loading } from "./Loading";
 import logo from "../assets/images/logo.png";
+import { userStore } from "../store/userStore";
 export const WrapperDashboard = ({
   children,
   tabActive,
   itemTabActive = "",
 }) => {
   const [isLoading, setIsloading] = useState(false);
-
+  const {name} = userStore()
+  console.log(name)
   const handleLogout = async () => {
     setIsloading(true);
-    const Response = await instance.post("/logout");
-    if (Response) {
-      localStorage.clear();
-      window.location.href = "/login";
-      setIsloading(false);
-      return;
-    }
+    localStorage.removeItem("Autentication");
+    localStorage.removeItem('name');
+    window.location.href = "/login";
     setIsloading(false);
     return;
   };
@@ -83,14 +81,17 @@ export const WrapperDashboard = ({
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col max-h-screen">
               {/* Navbar */}
+
               <div className="navbar bg-secondary w-full flex justify-between items-center md:px-7 border-b">
-                <div className="navbar-start flex-1 md:navbar-end">
-                  <div className=" flex-row-reverse md:flex-row flex gap-2">
-                    <h1 className="text-lg font-bold md:text-right text-primary">
-                      Username Disini
-                    </h1>
+                {name && (
+                  <div className="navbar-start flex-1 md:navbar-end">
+                    <div className=" flex-row-reverse md:flex-row flex gap-2">
+                      <h1 className="text-lg font-bold md:text-right text-primary">
+                        {name}
+                      </h1>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* icon Burger button untuk tampilan mobile */}
                 <div className="navbar-end flex-1 md:hidden">
