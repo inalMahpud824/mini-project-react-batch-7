@@ -29,16 +29,19 @@ export const ListArticle = () => {
           <div className="flex md:flex-row flex-col-reverse gap-4 justify-between items-center">
             <div className=" w-full flex flex-col">
               {articles &&
-                articles.map((article) => (
-                  <ItemArtickel
-                    key={article.id}
-                    description={article.description}
-                    title={article.title}
-                    image={article.image}
-                    id={article.id}
-                    updateAt={article.update_at}
-                  />
-                ))}
+                articles
+                  .slice()
+                  .reverse()
+                  .map((article) => (
+                    <ItemArtickel
+                      key={article.id}
+                      description={article.description}
+                      title={article.title}
+                      image={article.image}
+                      id={article.id}
+                      updateAt={article.update_at}
+                    />
+                  ))}
             </div>
           </div>
         </div>
@@ -70,7 +73,7 @@ const ItemArtickel = ({title, image, description, id, updateAt}) => {
             import.meta.env.VITE_SUPABASE_URL
           }/storage/v1/object/public/image-article/public/${image}`}
           alt="Gambar kecil 2"
-          className="md:min-w-[12rem] min-w-[5rem] w-[30rem] object-contain mb-2 rounded"
+          className="md:min-w-[15rem] min-w-[8rem] max-w-[8rem] md:max-w-[15rem] object-contain mb-2 rounded"
         />
       </div>
     </div>
