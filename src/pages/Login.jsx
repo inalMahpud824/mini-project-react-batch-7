@@ -85,7 +85,7 @@ export const Login = () => {
             handelChange={handelChange}
           />
           <button
-            className="py-2 bg-neutral text-primary rounded-full px-[3rem] font-semibold hover:bg-none hover:bg-blue-900 mt-7 text-xl"
+            className="py-2 bg-neutral text-primary rounded-full px-[3rem] font-semibold hover:bg-primary hover:text-neutral mt-7 text-xl"
             type="submit"
           >
             Login

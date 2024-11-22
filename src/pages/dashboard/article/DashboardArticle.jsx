@@ -7,6 +7,8 @@ import { Loading } from "../../../components/Loading";
 import { deleteArticleById } from "../../../services/deleteArticle";
 import { Link } from "react-router-dom";
 import { convertTimestampToDate } from "../../../utils/convertTime";
+import { ModalConfirm } from "../../../components/Modal/ModalConfirm";
+import { ModalSuccess } from "../../../components/Modal/ModalSuccess";
 
 export const DashboardArticle = () => {
   const [addArticle, setAddArticle] = useState(false);
@@ -34,6 +36,7 @@ export const DashboardArticle = () => {
 const DataTable = ({ setAddArticle, setEditArticle, setIdEdit }) => {
   const [dataArticle, setDataArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [idDelete, setIdDelete] = useState(null)
   useEffect(() => {
     setIsLoading(true)
     const fetchAll = async () => {
@@ -51,14 +54,15 @@ const DataTable = ({ setAddArticle, setEditArticle, setIdEdit }) => {
   }, []);
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm(`Apakah Kamu yakin delete artilikel dengan id ${id} ini ?`);
-    if(!confirm){
-      return;
-    } 
+    // const confirm = window.confirm(`Apakah Kamu yakin delete artilikel dengan id ${id} ini ?`);
+    // if(!confirm){
+    //   return;
+    // } 
     try{
      await deleteArticleById(id);
-       alert("Delete Success");
-      window.location.reload();
+      //  alert("Delete Success");
+      // window.location.reload();
+    document.getElementById("modal-success").showModal();
     }catch(e){
       console.error(e)
     }
@@ -66,6 +70,8 @@ const DataTable = ({ setAddArticle, setEditArticle, setIdEdit }) => {
   return (
     <>
       {isLoading && <Loading />}
+      <ModalSuccess description={'delete Success'} textButton={'Close'} title={'Success'} id="modal-success" functionClick={() => window.location.reload()} />
+      <ModalConfirm description={'Are you sure delete this article'} title={'Confirm Delete'} funtionOnConfirm={() => handleDelete(idDelete)} id="modal-delete" />
       <div className="px-7 py-4 bg-white min-h-screen">
         <h1 className="text-2xl font-bold py-7">List Article</h1>
         <button
@@ -122,7 +128,10 @@ const DataTable = ({ setAddArticle, setEditArticle, setIdEdit }) => {
                         </button>
                         <button
                           className="btn btn-sm bg-red-600 text-white border-none"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => {
+                            setIdDelete(item.id)
+                            document.getElementById("modal-delete").showModal();
+                          }}
                         >
                           Delete
                         </button>

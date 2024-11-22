@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import { addArticle } from "../../../services/addArticle";
 import { uploadImage } from "../../../services/uploadImage";
 import { Loading } from "../../../components/Loading";
+import { ModalSuccess } from "../../../components/Modal/ModalSuccess";
 export const FormAddArticle = ({ setAddArticle }) => {
   const [inputArticle, setInputArticle] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +32,7 @@ export const FormAddArticle = ({ setAddArticle }) => {
         image: randomName,
       });
       setIsLoading(false);
-      setAddArticle(false);
+      document.getElementById("succes-add").showModal();
     } catch (e) {
       console.error(e);
       setIsLoading(false);
@@ -40,6 +41,13 @@ export const FormAddArticle = ({ setAddArticle }) => {
   };
   return (
     <>
+      <ModalSuccess
+        description={"Success add new article"}
+        functionClick={() => setAddArticle(false)}
+        title={"Success"}
+        id="succes-add"
+        textButton={"Close"}
+      />
       {isLoading && <Loading />}
       <div className="min-h-screen bg-white p-7">
         <button
