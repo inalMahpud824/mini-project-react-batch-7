@@ -11,7 +11,6 @@ export const getSummaryWithAi = async (content) => {
       },
     ],
   });
-  console.log(completion.choices[0].message);
   const result = completion.choices[0].message.content;
   return result;
 };

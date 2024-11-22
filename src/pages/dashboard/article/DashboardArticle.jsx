@@ -52,10 +52,12 @@ const DataTable = ({ setAddArticle, setEditArticle, setIdEdit }) => {
 
   const handleDelete = async (id) => {
     const confirm = window.confirm(`Apakah Kamu yakin delete artilikel dengan id ${id} ini ?`);
-    if(!confirm) return
+    if(!confirm){
+      return;
+    } 
     try{
      await deleteArticleById(id);
-      confirm("Delete Success");
+       alert("Delete Success");
       window.location.reload();
     }catch(e){
       console.error(e)
