@@ -52,7 +52,7 @@ export const WrapperDashboard = ({
                   active={tabActive == "dashboard" ? true : false}
                 />
                 <ListMenuDropdown
-                  text={"Konten"}
+                  text={"Content"}
                   icon={faTableList}
                   active={tabActive == "konten" ? true : false}
                 >
@@ -145,7 +145,7 @@ export const WrapperDashboard = ({
                       active={tabActive == "dashboard" ? true : false}
                     />
                     <ListMenuDropdown
-                      text={"Konten"}
+                      text={"Content"}
                       icon={faTableList}
                       active={tabActive == "konten" ? true : false}
                     >

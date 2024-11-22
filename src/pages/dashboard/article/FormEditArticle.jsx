@@ -8,14 +8,15 @@ import { updateArticleById } from "../../../services/updateArticle";
 import { Loading } from "../../../components/Loading";
 import { deleteImage } from "../../../services/deleteImage";
 import { uploadImage } from "../../../services/uploadImage";
+import { ModalSuccess } from "../../../components/Modal/ModalSuccess";
 export const FormEditArticle = ({ setEditArticle, id }) => {
   const [dataEdit, setDataEdit] = useState(null);
   const [isLoading, setIsloading] = useState(false);
   const editorRef = useRef(null);
   const imageRef = useRef(null);
-  
+
   useEffect(() => {
-    if(id){
+    if (id) {
       const fetch = async () => {
         try {
           const response = await getArticleById(id);
@@ -28,47 +29,47 @@ export const FormEditArticle = ({ setEditArticle, id }) => {
     }
   }, [id]);
 
-  const handleSubmit = async (e)  => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsloading(true);
     const file = imageRef.current.files[0];
-    if(!file) {
+    if (!file) {
       const payload = {
         title: dataEdit.title,
         description: dataEdit.description,
         content: editorRef.current.getContent(),
       };
-      try{
-          await updateArticleById(dataEdit.id, payload);
-         setIsloading(false);
-         setEditArticle(false);
-         return;
-      }catch(e){
+      try {
+        await updateArticleById(dataEdit.id, payload);
+        document.getElementById("succes-edit").showModal();
+        setIsloading(false);
+        return;
+      } catch (e) {
         console.error(e);
         setIsloading(false);
-        return
+        return;
       }
     }
-    try{
+    try {
       const randomName = crypto.randomUUID();
       const payload = {
         title: dataEdit.title,
         description: dataEdit.description,
         content: editorRef.current.getContent(),
-        image: randomName
+        image: randomName,
       };
       await deleteImage(dataEdit.image);
-       await uploadImage(file, randomName);
+      await uploadImage(file, randomName);
       await updateArticleById(dataEdit.id, payload);
+      document.getElementById("succes-edit").showModal();
       setIsloading(false);
-      setEditArticle(false);
-      return
-    }catch(e){
+      return;
+    } catch (e) {
       console.error(e);
       setIsloading(false);
-      return
+      return;
     }
-  }
+  };
   const handleChange = (e) => {
     setDataEdit({
       ...dataEdit,
@@ -78,6 +79,13 @@ export const FormEditArticle = ({ setEditArticle, id }) => {
 
   return (
     <>
+      <ModalSuccess
+        description={"Success Edit article"}
+        functionClick={() => setEditArticle(false)}
+        title={"Success"}
+        id="succes-edit"
+        textButton={"Close"}
+      />
       {isLoading && <Loading />}
       <div className="min-h-screen bg-white p-7">
         <button
